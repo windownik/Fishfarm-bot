@@ -151,6 +151,7 @@ class Admin_Pool(StatesGroup):
     add_fish = State()
     pick_investor = State()
     pick_fish_mass = State()
+    set_fish_price = State()
     pick_fish_id = State()
     confirm_fish = State()
     save_fish = State()

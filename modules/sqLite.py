@@ -13,7 +13,8 @@ def new_user_table(
      fish_mass TEXT, 
      fish_id TEXT, 
      type TEXT, 
-     date DATETIME)''')
+     date DATETIME,
+     id INTEGER PRIMARY KEY)''')
     db.commit()
 
 

@@ -271,6 +271,19 @@ async def add_person_start(message: types.Message):
     if message.text.isdigit():
         sqLite.insert_info(name='fish_mass', table_name='users', date=f'{message.text}',
                            telegram_id=workWF.read_admin())
+        await message.answer(text=f"Введите стоимость добавляемой рыбы в RUR.\n\n"
+                                  f"Только цифры.")
+        await Admin_Pool.set_fish_price.set()
+    else:
+        await message.answer(text="Нажмите кнопку")
+
+
+# Start menu admin reply
+@dp.message_handler(state=Admin_Pool.set_fish_price)
+async def add_person_start(message: types.Message):
+    if message.text.isdigit():
+        sqLite.insert_info(name='fish_price', table_name='users', date=f'{message.text}',
+                           telegram_id=workWF.read_admin())
         fish_id = str(sqLite.read_value_bu_name(name='last_id', table='users', telegram_id=workWF.read_admin())[0])
         await message.answer(text=f"Введите ID сделки. Последний ID сделки в базе данных - <b>{fish_id}</b>\n\n"
                                   f"Только цифры.", parse_mode='html')
@@ -291,6 +304,7 @@ async def add_person_start(message: types.Message):
         all_fish_in_pool = sqLite.read_values_in_db_by_phone(table='pools', name='number', data=int(data[10]))[4]
         await message.answer(text=f"Инвестор - <b>{name}</b>\n"
                                   f"Купил - <b>{data[12]}</b> кг рыбы\n"
+                                  f"Стоимость рыбы - <b>{data[15]} RUR</b>\n"
                                   f"В бассейн - <b>№ {data[10]}</b>\n"
                                   f"ID сделки - <b>№ {message.text}</b>\n"
                                   f"В бассейне сейчас - <b>{str(all_fish_in_pool)} кг</b> рыбы", parse_mode='html',
@@ -347,7 +361,7 @@ async def add_person_start(call: types.CallbackQuery):
 
     old_balance = sqLite.read_values_in_db_by_phone(table='users', name='telegram_id', data=int(oner))[6]
     sqLite.insert_info(table_name='users', telegram_id=workWF.read_admin(), date=int(fish_id), name='last_id')
-    new_balance = float(old_balance) - float(start_fish_mass)*float(data[15])
+    new_balance = float(old_balance) - float(data[15])
     sqLite.insert_info(table_name='users', telegram_id=int(oner), date=new_balance, name='balance')
     try:
         await bot.send_message(chat_id=oner, text=f'Поздравляем администратор добавил вам рыбу с ID <b>{fish_id}</b>. '

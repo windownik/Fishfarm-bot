@@ -4,17 +4,18 @@ from aiogram import executor
 from modules.dispatcher import dp
 import schedule
 from modules.servic_payments import day_tax
+from modules import workWF
 
 
 #
 def sleeper():
     while True:
-        print('work')
+        telegram_token = workWF.xsl_read()
         time.sleep(1200)
 
 
 def day_tax_run():
-    schedule.every().day.at("04:10").do(day_tax)
+    schedule.every().day.at("23:10").do(day_tax)
 
     while True:
         schedule.run_pending()

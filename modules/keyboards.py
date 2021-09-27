@@ -183,7 +183,7 @@ fish_price = InlineKeyboardButton(text='Стоимость рыбы', callback_d
 prices = InlineKeyboardMarkup()
 prices.add(food_price)
 prices.add(service_price)
-prices.add(fish_price)
+# prices.add(fish_price)
 prices.add(back_callBack)
 
 

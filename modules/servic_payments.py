@@ -5,15 +5,14 @@ telegram_token = workWF.xsl_read()
 API_link = f'https://api.telegram.org/bot{telegram_token}/'
 
 
-# def send_massage(user_id: str, text: str):
-#     try:
-#         requests.get(API_link + f'sendMessage?chat_id={user_id}&text={text}').json()
-#     except:
-#         pass
+def send_massage(user_id: str, text: str):
+    try:
+        requests.get(API_link + f'sendMessage?chat_id={user_id}&text={text}').json()
+    except:
+        pass
 
 
 def day_tax():
-    print(123)
     admin_id = workWF.read_admin()
     pools = sqLite.read_all_value_bu_name(name='*', table='pools')
     for i in range(0, len(pools)):
@@ -33,9 +32,6 @@ def day_tax():
             new_balance = round(old_balance - fish_mass_one * service_price, 2)
             sqLite.insert_info(table_name='users', telegram_id=int(user_tg_id), name='balance',
                                date=str(new_balance))
-            # sqLite.insert_first_note(telegram_id=admin_id, table=f'pool{int(i + 1)}')
-            # sqLite.insert_info(table_name=f'pool{int(i + 1)}', telegram_id=admin_id, name='balance',
-            #                    date=str(round(fish_mass_one * service_price, 2)))
             sqLite.insert_pool_db1(telegram_id=admin_id,
                                    food_mass=str(round(fish_mass_one * service_price, 2)),
                                    fish_mass='None',
@@ -44,9 +40,9 @@ def day_tax():
                                    data=datetime.datetime.now(),
                                    type='service_pay')
             price = fish_mass_one * service_price
-            # try:
-            #     send_massage(user_id=user_tg_id,
-            #                  text=f'Плата за обслуживание рыбы с ID {fish_id} составила {price} RUR')
-            # except:
-            #     send_massage(user_id=workWF.read_admin(), text=f'Списание денег за обслуживание ID рыбы {fish_id},'
-            #                                                    f'телеграм ID {user_tg_id} не действительный ')
+            try:
+                send_massage(user_id=user_tg_id,
+                             text=f'Плата за обслуживание рыбы с ID {fish_id} составила {price} RUR')
+            except:
+                send_massage(user_id=workWF.read_admin(), text=f'Списание денег за обслуживание ID рыбы {fish_id},'
+                                                               f'телеграм ID {user_tg_id} не действительный ')
