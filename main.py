@@ -15,7 +15,7 @@ def sleeper():
 
 
 def day_tax_run():
-    schedule.every().day.at("23:10").do(day_tax)
+    schedule.every().day.at("04:10").do(day_tax)
 
     while True:
         schedule.run_pending()
