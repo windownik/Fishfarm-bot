@@ -50,11 +50,11 @@ def read_all_value_bu_name(name: str = '*', table: str = 'users'):
 
 # Создаем первую запись в бд о пользователе в таблице users
 def insert_first_note(
-        telegram_id: int
+        telegram_id: int, *, table: str = 'users'
 ):
     connect = sqlite3.connect('modules/database.db')
     curs = connect.cursor()
-    curs.execute(f"INSERT INTO users (telegram_id) VALUES ('{telegram_id}')")
+    curs.execute(f"INSERT INTO {table} (telegram_id) VALUES ('{telegram_id}')")
     connect.commit()
     connect.close()
 
@@ -82,9 +82,9 @@ def insert_pool_db1(telegram_id: str,
                     type: str):
     connect = sqlite3.connect('modules/database.db')
     curs = connect.cursor()
-    curs.execute(f"INSERT INTO pool{number} VALUES (?,?,?,?,?,?)",
+    curs.execute(f"INSERT OR IGNORE INTO pool{number} VALUES (?,?,?,?,?,?,?)",
                  (f'{telegram_id}', f'{food_mass}', f'{fish_mass}', f'{fish_id}', f'{type}',
-                  f'{data}'))
+                  f'{data}', None))
     connect.commit()
     connect.close()
 
