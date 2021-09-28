@@ -153,7 +153,7 @@ async def add_person_start(message: types.Message):
                                          parse_mode='html', reply_markup=types.ReplyKeyboardRemove())
                 elif line_type == 'service_pay':
                     await message.answer(text=f'С вашего счета списана сумма <b>{str(data[i][1])} RUR</b> '
-                                              f'pа обслуживание вашей рыбы с ID - <b>{str(data[i][3])}</b>. '
+                                              f'За обслуживание вашей рыбы с ID - <b>{str(data[i][3])}</b>. '
                                               f'Дата записи - <b>{str(data[i][5]).split(".")[0]}</b>',
                                          parse_mode='html', reply_markup=types.ReplyKeyboardRemove())
                 elif line_type == 'admin_sell_fish':

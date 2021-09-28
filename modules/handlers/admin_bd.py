@@ -35,7 +35,7 @@ async def add_person_start(message: types.Message):
                 pass
             else:
                 id_s = id_s + str(fish_id[i][3]) + ' '
-                i = KeyboardButton(f'ID № {i + 1}')
+                i = KeyboardButton(f'ID № {str(fish_id[i][3])}')
                 date_keyboard.insert(i)
         await message.answer('Выберите ID рыбы которой вы хотите посмотреть журнал событий',
                              reply_markup=date_keyboard)
